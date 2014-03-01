@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+
+<!-- SRC For JQUERY -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
+</script>
+
+<!-- Get screen width-->
+<script>
+var wid = window.outerWidth; 
+var hei = window.outerHeight; 
+
+function getH() {
+	var w = new Number(hei);
+    return w;
+	
+}
+function getW() {
+    var w = new Number(wid);
+    return w;
+}
+</script>
+
+<title>Morning Drive</title>
+
+<style>
+@font-face
+{
+/*	
+font-family: Segoe UI;
+src: url(segoeui.ttf);
+*/
+}
+
+body {
+
+	text-shadow:#00F;
+	color:#fff;
+	font: normal 100% Helvetica, Arial, sans-serif;
+	font-size: 0.95em;        /* 24px / 16px = 1.5em */
+	
+			
+		
+		
+	
+}
+.tempinput {
+	-webkit-appearance: none;		
+	position:absolute;
+	size:auto;	
+  	box-shadow: inset 2px 2px 2px 0px #666666;
+	
+}
+.names {
+		
+	position:absolute;
+	color:#FFF;
+	size:auto;
+	border:none;
+	background-color:transparent;
+
+}
+.textInput {
+	-webkit-appearance: none;		
+	position:absolute;
+	size:auto;	
+  	box-shadow: inset 2px 2px 2px 0px #666666;
+	display:none;
+	font-size: 1.10em;
+	
+}
+.noteArea {
+	position: absolute;	
+	-webkit-appearance: none;		
+	position:absolute;
+	size:auto;	
+  	box-shadow: inset 2px 2px 2px 0px #666666;
+	opacity:0;
+	display:none;			
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<script>
+
+
+var background = new Image();
+background.src = "codebg.jpg";
+background.style.width = getW()+"px";
+background.style.height = getH()+'px';	
+background.style.position = 'absolute';
+background.style.left = 0;
+background.style.top = 0;
+document.body.appendChild( background );
+
+var titlelogo = new Image();
+titlelogo.src = "applogo.png";
+titlelogo.style.width = getW()*0.9+"px";
+titlelogo.style.height = getH()/8+'px';	
+titlelogo.style.position = 'absolute';
+titlelogo.style.left = getW()/2 - (getW()*0.9)/2 +"px";
+titlelogo.style.top = getW()*0.04 + "px";
+titlelogo.setAttribute("align", "center");
+document.body.appendChild( titlelogo );
+
+var infoimage = new Image();
+infoimage.src = "codeinfo.png";
+infoimage.style.width = getW()*0.7+"px";
+infoimage.style.height = getH()*0.08+'px';	
+infoimage.style.position = 'absolute';
+infoimage.style.left = getW()/2 - (getW()*0.7)/2 +"px";
+infoimage.style.top = getH()/7 + "px";
+document.body.appendChild( infoimage );
+
+var codelogo = new Image();
+codelogo.src = "codelogo.png";
+codelogo.style.width = getW()*0.3+"px";
+codelogo.style.height = getH()*0.07+'px';	
+codelogo.style.position = 'absolute';
+codelogo.style.left = getW()*0.02+"px";
+codelogo.style.top = getH()- (getH()*0.08) + "px";
+document.body.appendChild( codelogo );
+
+var canadalogo = new Image();
+canadalogo.src = "canadaloo.png";
+canadalogo.style.width = getW()*0.3+"px";
+canadalogo.style.height = getH()*0.08+'px';	
+canadalogo.style.position = 'absolute';
+canadalogo.style.left = getW()-getW()*0.3+"px";
+canadalogo.style.top = getH()- (getH()*0.09) + "px";
+document.body.appendChild( canadalogo );
+
+
+var locationarea = document.createElement("textarea");
+locationarea.setAttribute("id", "locationarea");
+locationarea.className = "tempinput";
+locationarea.style.width = getW()*0.7+"px";
+locationarea.style.height = getW()*0.05+"px";
+locationarea.style.left = getW()/2 - (getW()*0.7)/2+"px";
+locationarea.style.top = getW()*0.42+'px';
+locationarea.maxLength = "128";	
+locationarea.style.fontSize = 0.95 + 'em';	
+locationarea.style.opacity = 1;	
+locationarea.value = "";								
+document.body.appendChild(locationarea);
+
+var destinationarea = document.createElement("textarea");
+destinationarea.setAttribute("id", "destinationarea");
+destinationarea.className = "tempinput";
+destinationarea.style.width = getW()*0.7+"px";
+destinationarea.style.height = getW()*0.05+"px";
+destinationarea.style.left = getW()/2 - (getW()*0.7)/2+"px";
+destinationarea.style.top = getW()*0.5+getW()*0.1+'px';
+destinationarea.maxLength = "128";	
+destinationarea.style.fontSize = 0.95 + 'em';	
+destinationarea.style.opacity = 1;	
+destinationarea.value = "";								
+document.body.appendChild(destinationarea);
+
+var carpic = new Image();
+carpic.src = "codecar.png";
+carpic.style.width = getW()*0.1+"px";
+carpic.style.height = getH()*0.05+'px';	
+carpic.style.position = 'absolute';
+carpic.style.left = getW()/2-(getW()*0.1)/2+"px";
+carpic.style.top = (getW()*0.5+getW()*0.2)-((getW()*0.5)/2.6)+'px';
+document.body.appendChild( carpic );
+
+var selectyear = document.createElement("select");
+selectyear.setAttribute("id", "selectyear");
+selectyear.style.height = getW()*0.05+"px";
+selectyear.style.width = getW()*0.5+"px";
+selectyear.style.position = 'absolute';
+//selectyear.style.height = getW()*0.05+"px";
+selectyear.style.left = getW()/2 - (getW()*0.5)/2+"px";
+selectyear.style.top = getW()*0.95-getW()*0.23+'px';
+var option = document.createElement("option");
+option.text = "Year of vehicle";
+selectyear.appendChild(option);
+document.body.appendChild( selectyear );
+
+var selectman = document.createElement("select");
+selectman.setAttribute("id", "destinationarea");
+selectman.style.height = getW()*0.05+"px";
+selectman.style.width = getW()*0.5+"px";
+selectman.style.position = 'absolute';
+//selectman.style.height = getW()*0.05+"px";
+selectman.style.left = getW()/2 - (getW()*0.5)/2+"px";
+selectman.style.top = getW()*1.08-getW()*0.23+'px';
+var option = document.createElement("option");
+option.text = "Manufacturer of vehicle";
+selectman.appendChild(option);
+document.body.appendChild( selectman );
+
+var selectmodel = document.createElement("select");
+selectmodel.setAttribute("id", "destinationarea");
+selectmodel.style.height = getW()*0.05+"px";
+selectmodel.style.width = getW()*0.5+"px";
+selectmodel.style.position = 'absolute';
+//selectmodel.style.height = getW()*0.05+"px";
+selectmodel.style.left = getW()/2 - (getW()*0.5)/2+"px";
+selectmodel.style.top = getW()*1.21-getW()*0.23+'px';
+var option = document.createElement("option");
+option.text = "Model of vehicle";
+selectmodel.appendChild(option);
+document.body.appendChild( selectmodel );
+
+var selecttype = document.createElement("select");
+selecttype.setAttribute("id", "destinationarea");
+selecttype.style.width = getW()*0.5+"px";
+selecttype.style.position = 'absolute';
+selecttype.style.height = getW()*0.05+"px";
+selecttype.style.left = getW()/2 - (getW()*0.5)/2+"px";
+selecttype.style.top = getW()*1.35-getW()*0.23+'px';
+var option = document.createElement("option");
+option.text = "Type of vehicle";
+selecttype.appendChild(option);
+document.body.appendChild( selecttype );
+
+var submitbutton = new Image();
+submitbutton.src = "codesubmit.png";
+submitbutton.style.width = getW()*0.30+"px";
+submitbutton.style.height = getH()*0.07+'px';	
+submitbutton.style.position = 'absolute';
+submitbutton.style.left = getW()/2-(getW()*0.3)/2+"px";
+submitbutton.style.top = getW()*1.24 + "px";
+document.body.appendChild( submitbutton );
+
+
+/*
+var weathertext = document.createElement("textarea");
+weathertext.setAttribute("id", "firstnametext");
+weathertext.readOnly = true;	
+weathertext.className = "names";
+weathertext.style.left = getW()/1.4 +'px';
+weathertext.style.top = getW()/7+'px';
+weathertext.style.fontSize = 2.5 + 'em';	
+weathertext.style.opacity = 1;	
+weathertext.style.width = getW()/4+"px";
+weathertext.value = "";								
+document.body.appendChild(weathertext);
+
+var counter = document.getElementById("textInput");
+counter.style.width = getW()*0.89+"px";
+counter.style.height = getW()*0.7+"px";
+counter.style.left = getW()/30+'px';
+counter.style.top = getW()*0.6+'px';
+counter.maxLength = "128";	
+*/
+</script>
+
+<script>
+$(document).ready(function(){
+	
+	$('#selectyear').change(function () {
+		alert("change");
+		
+	})
+});
+</script>
+</body>
+</html>
