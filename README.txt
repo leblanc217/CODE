@@ -73,7 +73,7 @@ Fuel Consumption
 http://data.gc.ca/data/en/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64
 
 Gasoline Prices
-http://data.gc.ca/data/en/dataset/94ed1666-ab94-4c08-8b06-71c27d3ac678
+http://data.gc.ca/data/en/dataset/9285b394-a929-4f5f-85c8-81518ca541e5
 
 Meteorological Service of Canada MSC
 http://data.gc.ca/data/en/dataset/1f864766-7f7f-4be7-8292-295065c65c78

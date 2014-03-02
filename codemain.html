@@ -2,16 +2,79 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=0" >
+
 
 <!-- SRC For JQUERY -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
+</script>
+
+<script>
+
+var finalOptionSelected = false;
+
+var lat = 0;
+var long = 0;
+	
+function gpsCheck(){
+	var x = true;
+
+	if(!navigator.geolocation){
+	alert("PLEASE TURN ON LOCATION SERVICES");
+		x = false;
+	}
+	
+	navigator.geolocation.getCurrentPosition(getPosition,errorCallback);
+
+	function errorCallback(error) {
+    if (error.code = error.PERMISSION_DENIED) {
+        alert("Please Turn On Location Services");
+		x = false;
+    }
+	}
+
+		
+	if (x = true)
+	{
+	function getPosition(position){
+	
+		lat = position.coords.latitude;
+		long = position.coords.longitude;
+		var xmlhttp;
+		xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function()
+  		{
+  				if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    		{
+    		document.getElementById("locationarea").value = xmlhttp.responseText;
+			
+	
+   			 }
+ 		 }
+		xmlhttp.open("GET","getlocation.php?lat="+lat+"&lng="+long,true);
+		xmlhttp.send();
+		}
+	}
+}
+
+
+
 </script>
 
 <!-- Get screen width-->
 <script>
 var wid = window.outerWidth; 
 var hei = window.outerHeight; 
+var models;
+var manu;
+var eng;
+var cityl;
+var cityh;
+var currentleter;
+var currentleterh;
+var gasOfTrip;
+var costOfTrip;
+var durationOfTrip;
 
 function getH() {
 	var w = new Number(hei);
@@ -21,6 +84,85 @@ function getH() {
 function getW() {
     var w = new Number(wid);
     return w;
+}
+
+
+function getA() {
+
+
+	var e = document.getElementById("yea");
+var strUser = e.options[e.selectedIndex].value;
+     
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.open("GET","fuel"+strUser+".xml",false);
+xmlhttp.send();
+xmlDoc=xmlhttp.responseXML;
+manu=xmlDoc.getElementsByTagName("Field_1");
+models = xmlDoc.getElementsByTagName("Field_2");
+eng = xmlDoc.getElementsByTagName("Field_4");
+cityl = xmlDoc.getElementsByTagName("Field_8");
+cityh = xmlDoc.getElementsByTagName("Field_9");
+ var option1 = document.createElement("option");
+  			option1.text = manu[2].childNodes[0].nodeValue;
+			document.getElementById("manuf").appendChild(option1);
+for (i=3;i<manu.length;i++)
+  {
+	  if (manu[i-1].childNodes[0].nodeValue!=manu[i].childNodes[0].nodeValue)
+	  {
+	 		var option2 = document.createElement("option");
+  			option2.text = manu[i].childNodes[0].nodeValue;
+			document.getElementById("manuf").appendChild(option2);
+	  }
+  }
+  
+}
+
+function getB() {
+
+	var e = document.getElementById("manuf");
+var strUser = e.options[e.selectedIndex].value;
+     
+
+
+for (i=3;i<models.length;i++)
+  {
+	  if (models[i-1].childNodes[0].nodeValue!=models[i].childNodes[0].nodeValue&&manu[i].childNodes[0].nodeValue==strUser)
+	  {
+	 		var option2 = document.createElement("option");
+  			option2.text = models[i].childNodes[0].nodeValue;
+			document.getElementById("model").appendChild(option2);
+	  }
+  }
+
+  
+}
+
+function getC() {
+
+	var e = document.getElementById("model");
+var strUser = e.options[e.selectedIndex].value;
+     
+
+
+for (i=3;i<eng.length;i++)
+  {
+	  if (models[i].childNodes[0].nodeValue==strUser)
+	  {
+	 		var option2 = document.createElement("option");
+  			option2.text = eng[i].childNodes[0].nodeValue;
+			document.getElementById("leter").appendChild(option2);
+
+	  }
+  }
+
+
 }
 </script>
 
@@ -41,7 +183,7 @@ body {
 	color:#fff;
 	font: normal 100% Helvetica, Arial, sans-serif;
 	font-size: 0.95em;        /* 24px / 16px = 1.5em */
-	
+	background-color:#259c33;
 			
 		
 		
@@ -95,7 +237,7 @@ body {
 var background = new Image();
 background.src = "codebg.jpg";
 background.style.width = getW()+"px";
-background.style.height = getH()+'px';	
+background.style.height = getH()+"px";	
 background.style.position = 'absolute';
 background.style.left = 0;
 background.style.top = 0;
@@ -103,8 +245,9 @@ document.body.appendChild( background );
 
 var titlelogo = new Image();
 titlelogo.src = "applogo.png";
+
 titlelogo.style.width = getW()*0.9+"px";
-titlelogo.style.height = getH()/8+'px';	
+titlelogo.style.height = getH()/8+"px";	
 titlelogo.style.position = 'absolute';
 titlelogo.style.left = getW()/2 - (getW()*0.9)/2 +"px";
 titlelogo.style.top = getW()*0.04 + "px";
@@ -114,7 +257,7 @@ document.body.appendChild( titlelogo );
 var infoimage = new Image();
 infoimage.src = "codeinfo.png";
 infoimage.style.width = getW()*0.7+"px";
-infoimage.style.height = getH()*0.08+'px';	
+infoimage.style.height = getH()*0.08+"px";	
 infoimage.style.position = 'absolute';
 infoimage.style.left = getW()/2 - (getW()*0.7)/2 +"px";
 infoimage.style.top = getH()/7 + "px";
@@ -122,8 +265,9 @@ document.body.appendChild( infoimage );
 
 var codelogo = new Image();
 codelogo.src = "codelogo.png";
+codelogo.setAttribute("id", "secret");
 codelogo.style.width = getW()*0.3+"px";
-codelogo.style.height = getH()*0.07+'px';	
+codelogo.style.height = getH()*0.07+"px";	
 codelogo.style.position = 'absolute';
 codelogo.style.left = getW()*0.02+"px";
 codelogo.style.top = getH()- (getH()*0.08) + "px";
@@ -132,7 +276,7 @@ document.body.appendChild( codelogo );
 var canadalogo = new Image();
 canadalogo.src = "canadaloo.png";
 canadalogo.style.width = getW()*0.3+"px";
-canadalogo.style.height = getH()*0.08+'px';	
+canadalogo.style.height = getH()*0.08+"px";	
 canadalogo.style.position = 'absolute';
 canadalogo.style.left = getW()-getW()*0.3+"px";
 canadalogo.style.top = getH()- (getH()*0.09) + "px";
@@ -158,7 +302,7 @@ destinationarea.className = "tempinput";
 destinationarea.style.width = getW()*0.7+"px";
 destinationarea.style.height = getW()*0.05+"px";
 destinationarea.style.left = getW()/2 - (getW()*0.7)/2+"px";
-destinationarea.style.top = getW()*0.5+getW()*0.1+'px';
+destinationarea.style.top = getW()*0.5+getW()*0.1+"px";
 destinationarea.maxLength = "128";	
 destinationarea.style.fontSize = 0.95 + 'em';	
 destinationarea.style.opacity = 1;	
@@ -168,102 +312,314 @@ document.body.appendChild(destinationarea);
 var carpic = new Image();
 carpic.src = "codecar.png";
 carpic.style.width = getW()*0.1+"px";
-carpic.style.height = getH()*0.05+'px';	
+carpic.style.height = getH()*0.05+"px";	
 carpic.style.position = 'absolute';
 carpic.style.left = getW()/2-(getW()*0.1)/2+"px";
-carpic.style.top = (getW()*0.5+getW()*0.2)-((getW()*0.5)/2.6)+'px';
+carpic.style.top = (getW()*0.5+getW()*0.2)-((getW()*0.5)/2.6)+"px";
 document.body.appendChild( carpic );
 
 var selectyear = document.createElement("select");
-selectyear.setAttribute("id", "selectyear");
+selectyear.setAttribute("id", "yea");
 selectyear.style.height = getW()*0.05+"px";
 selectyear.style.width = getW()*0.5+"px";
 selectyear.style.position = 'absolute';
 //selectyear.style.height = getW()*0.05+"px";
 selectyear.style.left = getW()/2 - (getW()*0.5)/2+"px";
-selectyear.style.top = getW()*0.95-getW()*0.23+'px';
+selectyear.style.top = getW()*0.95-getW()*0.23+"px";
 var option = document.createElement("option");
 option.text = "Year of vehicle";
 selectyear.appendChild(option);
+for (i=0;i<15;i++)
+  {
+	  if (i < 10)
+	  {
+	 		var option2 = document.createElement("option");
+  			option2.text = "200"+i.toString();
+			selectyear.appendChild(option2);  
+	  }
+	  else
+	  {
+		  	 		var option2 = document.createElement("option");
+  			option2.text = "20"+i.toString();
+			selectyear.appendChild(option2); 
+	  }
+  }
 document.body.appendChild( selectyear );
 
+
+
+
 var selectman = document.createElement("select");
-selectman.setAttribute("id", "destinationarea");
+selectman.setAttribute("id", "manuf");
 selectman.style.height = getW()*0.05+"px";
 selectman.style.width = getW()*0.5+"px";
 selectman.style.position = 'absolute';
 //selectman.style.height = getW()*0.05+"px";
 selectman.style.left = getW()/2 - (getW()*0.5)/2+"px";
-selectman.style.top = getW()*1.08-getW()*0.23+'px';
+selectman.style.top = getW()*1.08-getW()*0.23+"px";
 var option = document.createElement("option");
 option.text = "Manufacturer of vehicle";
 selectman.appendChild(option);
 document.body.appendChild( selectman );
 
 var selectmodel = document.createElement("select");
-selectmodel.setAttribute("id", "destinationarea");
+selectmodel.setAttribute("id", "model");
 selectmodel.style.height = getW()*0.05+"px";
 selectmodel.style.width = getW()*0.5+"px";
 selectmodel.style.position = 'absolute';
 //selectmodel.style.height = getW()*0.05+"px";
 selectmodel.style.left = getW()/2 - (getW()*0.5)/2+"px";
-selectmodel.style.top = getW()*1.21-getW()*0.23+'px';
+selectmodel.style.top = getW()*1.21-getW()*0.23+"px";
 var option = document.createElement("option");
 option.text = "Model of vehicle";
 selectmodel.appendChild(option);
 document.body.appendChild( selectmodel );
 
 var selecttype = document.createElement("select");
-selecttype.setAttribute("id", "destinationarea");
+selecttype.setAttribute("id", "leter");
 selecttype.style.width = getW()*0.5+"px";
 selecttype.style.position = 'absolute';
 selecttype.style.height = getW()*0.05+"px";
 selecttype.style.left = getW()/2 - (getW()*0.5)/2+"px";
-selecttype.style.top = getW()*1.35-getW()*0.23+'px';
+selecttype.style.top = getW()*1.35-getW()*0.23+"px";
 var option = document.createElement("option");
 option.text = "Type of vehicle";
 selecttype.appendChild(option);
 document.body.appendChild( selecttype );
 
 var submitbutton = new Image();
+submitbutton.setAttribute("id", "sub");
 submitbutton.src = "codesubmit.png";
 submitbutton.style.width = getW()*0.30+"px";
-submitbutton.style.height = getH()*0.07+'px';	
+submitbutton.style.height = getH()*0.07+"px";	
 submitbutton.style.position = 'absolute';
 submitbutton.style.left = getW()/2-(getW()*0.3)/2+"px";
 submitbutton.style.top = getW()*1.24 + "px";
+
+
+var pixelRatio = window.devicePixelRatio || 1;
+
+
+
+
+
+if(window.screen.width* pixelRatio == 640 && window.screen.height* pixelRatio == 1136){
+
+	
+	
+	canadalogo.style.top = getW()*1.42+'px';
+	codelogo.style.top = getW()*1.44+'px';
+	submitbutton.style.top = getW()*1.25 + "px";
+	selecttype.style.height = getW()*0.07+"px";
+	selectmodel.style.height = getW()*0.07+"px";
+	selectman.style.height = getW()*0.07+"px";
+	selectyear.style.height = getW()*0.07+"px";
+	submitbutton.style.width = getW()*0.43+"px";
+	submitbutton.style.height = getH()*0.09+'px'
+	submitbutton.style.left = getW()/2-(getW()*0.43)/2+"px";
+	
+	
+	
+}
 document.body.appendChild( submitbutton );
 
+if(getW() > getH()){
+	
+	window.location.href = "codesorry.html";
+	
+}
 
-/*
-var weathertext = document.createElement("textarea");
-weathertext.setAttribute("id", "firstnametext");
-weathertext.readOnly = true;	
-weathertext.className = "names";
-weathertext.style.left = getW()/1.4 +'px';
-weathertext.style.top = getW()/7+'px';
-weathertext.style.fontSize = 2.5 + 'em';	
-weathertext.style.opacity = 1;	
-weathertext.style.width = getW()/4+"px";
-weathertext.value = "";								
-document.body.appendChild(weathertext);
 
-var counter = document.getElementById("textInput");
-counter.style.width = getW()*0.89+"px";
-counter.style.height = getW()*0.7+"px";
-counter.style.left = getW()/30+'px';
-counter.style.top = getW()*0.6+'px';
-counter.maxLength = "128";	
-*/
+gpsCheck();
+
 </script>
 
 <script>
 $(document).ready(function(){
-	
-	$('#selectyear').change(function () {
-		alert("change");
+	/*
+	$('#secret').click(function(){
 		
-	})
+		destinationarea.value = "yorkdail mall";
+		//document.getElementById("yea").value = "yorkdail mall";
+		
+
+			
+				$('#yea').empty();
+						$('#manuf').empty();
+			$('#model').empty();
+			$('#leter').empty();
+	
+			var option = document.createElement("option");
+			option.text = "2007";
+			selectyear.appendChild(option);
+			document.body.appendChild( selectyear );
+			getA();
+						var option = document.createElement("option");
+			option.text = "AUDI";
+			selectman.appendChild(option);
+			document.body.appendChild( selectman );
+			getB();
+			var option = document.createElement("option");
+			option.text = "A3";
+			selectmodel.appendChild(option);
+			getC();
+			var option = document.createElement("option");
+			option.text = "2.0";
+			selecttype.appendChild(option);
+
+		//document.getElementById("destinationarea").value = "yorkdail mall";
+		//document.getElementById("destinationarea").value = "yorkdail mall";
+		//document.getElementById("destinationarea").value = "yorkdail mall";
+		//alert("sdf");
+	});
+*/
+if ( (navigator.userAgent.match(/iPhone/i)) 
+   || (navigator.userAgent.match(/iPod/i) ) 
+   || (navigator.userAgent.match(/iPad/i))) 
+{
+      $("#sub").on('touchstart', function(){ 
+           $('#sub').click();
+      });
+    
+}
+
+
+$('#sub').click(function(){
+	if(finalOptionSelected)
+	{
+$('body').css('zoom', '100%');	
+var xmlhttp;
+xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+  	{
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+  			{			
+					//alert(xmlhttp.responseText);
+					var str = xmlhttp.responseText;
+					var res = str.split(",,");
+					//alert(res[1]);
+					durationOfTrip = res[0];
+				
+					var ss = res[1].replace("km","");
+					ss = ss.replace(",","");
+					gasOfTrip = currentleter/100;
+					gasOfTrip*=ss;
+					
+					costOfTrip = gasOfTrip * 1.42;//this is the most recent average gas price for toronto premium	
+						var a = res[2];
+						var b = res[3];
+					
+					if(res[4]=="NOT_FOUND")
+					{
+						alert("pls pls respond");
+					}
+					else
+					{
+					var url2 = 	"http://www.qrworkplace.com/codesubmitted.php?time='"+durationOfTrip+"'&gas='"+gasOfTrip+"'&cost='"+costOfTrip+"'"+"&latt='"+a+"'"+"&long='"+b+"'";
+					
+					window.location.href = url2;
+					//window.open(url2,"mywindow","menubar=0,resizable=0");
+					}
+									
+						
+			}
+	}
+var url = 	"codedirections.php?location="+document.getElementById("locationarea").value+"&direction='"+
+									document.getElementById("destinationarea").value+"";
+								
+xmlhttp.open("GET",url,true);
+xmlhttp.send();
+		finalOptionSelected = false;
+	}
+	else
+	{
+	//alert("pls respond");	
+	}
+});
+
+
+
+	$('#yea').change(function(){
+			$('#manuf').empty();
+			$('#model').empty();
+			$('#leter').empty();
+			
+			var option = document.createElement("option");
+			option.text = "Manufacturer of vehicle";
+			selectman.appendChild(option);
+			document.body.appendChild( selectman );
+
+			var option = document.createElement("option");
+			option.text = "Model of vehicle";
+			selectmodel.appendChild(option);
+
+			var option = document.createElement("option");
+			option.text = "Type of vehicle";
+			selecttype.appendChild(option);
+
+
+		getA();
+	
+	});
+	
+		$('#manuf').change(function(){
+			$('#model').empty();
+			$('#leter').empty();
+			
+			var option = document.createElement("option");
+			option.text = "Model of vehicle";
+			selectmodel.appendChild(option);
+
+			var option = document.createElement("option");
+			option.text = "Type of vehicle";
+			selecttype.appendChild(option);
+
+
+		getB();
+	
+	});
+	
+			$('#model').change(function(){
+			$('#leter').empty();
+			
+			var option = document.createElement("option");
+			option.text = "Type of vehicle";
+			selecttype.appendChild(option);
+
+		getC();
+	
+	});
+	
+				$('#leter').change(function(){
+			
+			var proxy = $( "#manuf option:selected" ).text();
+			var proxymod = $( "#model option:selected" ).text();
+			var proxyL = $( "#leter option:selected" ).text();
+			
+			for (i=3;i<manu.length;i++)
+  			{
+				if(manu[i].childNodes[0].nodeValue==proxy)
+				{
+					if(models[i].childNodes[0].nodeValue==proxymod)
+					{
+						if(eng[i].childNodes[0].nodeValue==proxyL)
+						{
+							currentleter = cityl[i].childNodes[0].nodeValue;
+							
+						}	
+					}	
+				}
+  			}
+			
+
+			$('#leter').empty();
+			
+			finalOptionSelected = true;
+
+		getC();
+	
+	});
+	
 });
 </script>
 </body>
