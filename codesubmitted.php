@@ -34,11 +34,7 @@ function getW() {
     return w;
 }
 
-if(getW() > getH()){
-	
-	window.location.href = "codesorry.html";
-	
-}
+
 </script>
 
 <title>Morning Drive</title>
@@ -412,7 +408,7 @@ time = time.replace("%27","");
 time = time.replace("%20","");
 time = time.replace("%20","");
 time = time.replace("%20","");
-//time = time.replace("%2","");
+time = time.replace("%2","");
 time = time.substring(0, time.length - 1);
 //time =decodeURI(time);
 

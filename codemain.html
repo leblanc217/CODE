@@ -511,14 +511,15 @@ xmlhttp.onreadystatechange=function()
 					
 					if(res[4]=="NOT_FOUND")
 					{
-						alert("pls pls respond");
+						alert("Please Enter A Valid Source & Destination");
 					}
 					else
 					{
 					var url2 = 	"http://www.qrworkplace.com/codesubmitted.php?time='"+durationOfTrip+"'&gas='"+gasOfTrip+"'&cost='"+costOfTrip+"'"+"&latt='"+a+"'"+"&long='"+b+"'";
-					
-					window.location.href = url2;
+					window.location.replace(url2);
+					//window.location.href = url2;
 					//window.open(url2,"mywindow","menubar=0,resizable=0");
+					finalOptionSelected = false;
 					}
 									
 						
@@ -529,7 +530,7 @@ var url = 	"codedirections.php?location="+document.getElementById("locationarea"
 								
 xmlhttp.open("GET",url,true);
 xmlhttp.send();
-		finalOptionSelected = false;
+		
 	}
 	else
 	{
