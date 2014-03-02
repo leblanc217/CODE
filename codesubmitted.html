@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+
+<!-- SRC For JQUERY -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js">
+</script>
+
+<!-- Get screen width-->
+<script>
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+var wid = window.outerWidth; 
+var hei = window.outerHeight; 
+
+function getH() {
+	var w = new Number(hei);
+    return w;
+	
+}
+function getW() {
+    var w = new Number(wid);
+    return w;
+}
+</script>
+
+<title>Morning Drive</title>
+
+<style>
+@font-face
+{
+/*	
+font-family: Segoe UI;
+src: url(segoeui.ttf);
+*/
+}
+
+body {
+
+	text-shadow:#00F;
+	color:#fff;
+	font: normal 100% Helvetica, Arial, sans-serif;
+	font-size: 0.95em;        /* 24px / 16px = 1.5em */
+	background-color:#259c33;
+			
+		
+		
+	
+}
+.tempinput {
+	-webkit-appearance: none;		
+	position:absolute;
+	size:auto;	
+  	box-shadow: inset 2px 2px 2px 0px #666666;
+	
+}
+.names {
+		
+	position:absolute;
+	color:#FFF;
+	size:auto;
+	border:none;
+	background-color:transparent;
+
+}
+.textInput {
+	-webkit-appearance: none;		
+	position:absolute;
+	size:auto;	
+  	box-shadow: inset 2px 2px 2px 0px #666666;
+	display:none;
+	font-size: 1.10em;
+	
+}
+.noteArea {
+	position: absolute;	
+	-webkit-appearance: none;		
+	position:absolute;
+	size:auto;	
+  	box-shadow: inset 2px 2px 2px 0px #666666;
+	opacity:0;
+	display:none;			
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<script>
+
+
+var background = new Image();
+background.src = "codebg.jpg";
+background.style.width = getW()+"px";
+background.style.height = getH()+'px';	
+background.style.position = 'absolute';
+background.style.left = 0;
+background.style.top = 0;
+document.body.appendChild( background );
+
+var titlelogo = new Image();
+titlelogo.src = "applogo.png";
+titlelogo.style.width = getW()*0.9+"px";
+titlelogo.style.height = getH()/8+'px';	
+titlelogo.style.position = 'absolute';
+titlelogo.style.left = getW()/2 - (getW()*0.9)/2 +"px";
+titlelogo.style.top = getW()*0.04 + "px";
+
+var a = document.createElement('a');
+a.href = "codemain.html"
+a.appendChild(titlelogo);
+
+document.body.appendChild( a );
+
+
+
+
+
+var codebox0 = new Image();
+codebox0.src = "codebox0.png";
+codebox0.style.width = getW()*0.48+"px";
+codebox0.style.height = getW()*0.48+'px';	
+codebox0.style.position = 'absolute';
+codebox0.style.left = getW()*0.01 + "px";
+codebox0.style.top = getW()*0.3 + "px";
+document.body.appendChild( codebox0 );
+
+var codebox1 = new Image();
+codebox1.src = "codebox1.png";
+codebox1.style.width = getW()*0.48+"px";
+codebox1.style.height = getW()*0.48+'px';	
+codebox1.style.position = 'absolute';
+codebox1.style.left = getW()*0.51 + "px";
+codebox1.style.top = getW()*0.3 + "px";
+document.body.appendChild( codebox1 );
+
+var codebox2 = new Image();
+codebox2.src = "codebox2.png";
+codebox2.style.width = getW()*0.48+"px";
+codebox2.style.height = getW()*0.48+'px';	
+codebox2.style.position = 'absolute';
+codebox2.style.left = getW()*0.01 + "px";
+codebox2.style.top = getW()*0.8+ "px";
+document.body.appendChild( codebox2 );
+
+var codebox3 = new Image();
+codebox3.src = "codebox3.png";
+codebox3.style.width = getW()*0.48+"px";
+codebox3.style.height = getW()*0.48+'px';	
+codebox3.style.position = 'absolute';
+codebox3.style.left = getW()*0.51 + "px";
+codebox3.style.top = getW()*0.8 + "px";
+document.body.appendChild( codebox3 );
+
+
+var codelogo = new Image();
+codelogo.src = "codelogo.png";
+codelogo.style.width = getW()*0.3+"px";
+codelogo.style.height = getH()*0.07+'px';	
+codelogo.style.position = 'absolute';
+codelogo.style.left = getW()*0.02+"px";
+codelogo.style.top = getH()- (getH()*0.08) + "px";
+document.body.appendChild( codelogo );
+
+var canadalogo = new Image();
+canadalogo.src = "canadaloo.png";
+canadalogo.style.width = getW()*0.3+"px";
+canadalogo.style.height = getH()*0.08+'px';	
+canadalogo.style.position = 'absolute';
+canadalogo.style.left = getW()-getW()*0.3+"px";
+canadalogo.style.top = getH()- (getH()*0.09) + "px";
+document.body.appendChild( canadalogo );
+
+
+
+var weathericon = new Image();
+weathericon.src = "";
+weathericon.style.width = getW()/4.8+"px";
+weathericon.style.height = getW()/4.8+"px";	
+weathericon.style.position = 'absolute';
+weathericon.style.left = getW()*0.55 + "px";
+weathericon.style.top = getW()*0.43 + "px";
+document.body.appendChild( weathericon );
+
+var weathertext = document.createElement("textarea");
+weathertext.setAttribute("id", "firstnametext");
+weathertext.readOnly = true;	
+weathertext.className = "names";
+weathertext.style.left = getW()/1.6 +'px';
+weathertext.style.top = getW()*0.43+getW()/4.8+ "px";
+weathertext.style.fontSize = 2.5 + 'em';	
+weathertext.style.opacity = 1;	
+weathertext.style.width = getW()/4+"px";
+weathertext.value = "";								
+document.body.appendChild(weathertext);
+
+var temptext = new Image();
+temptext.src = "tempc.png";
+temptext.style.width = getW()/11+"px";
+temptext.style.height = getW()/11+"px";	
+temptext.style.position = 'absolute';
+temptext.style.left =  getW()/1.4 + getW()/7 +'px';
+temptext.style.top = getW()*0.43+getW()/5.8+ "px";
+document.body.appendChild( temptext );
+
+var xmlhttp;
+xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+  	{
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+  			{
+				
+				var n = xmlhttp.responseText.split(",");
+			
+				weathertext.value = n[0];
+				if(n[1] == 3 || n[1] == 10){
+					weathericon.src = "cloud.png";
+					
+				}
+				if(n[1] == 32 || n[1] == 33){
+					weathericon.src = "night.png";
+					
+				}
+				if(n[1] == 30 || n[1] == 31){
+					weathericon.src = "nightcloud.png"
+				}
+				if(n[1] == 2){
+					
+					weathericon.src = "suncloud.png"
+				}
+				if(n[1] == 0 || n[1] == 1){
+					
+					weathericon.src = "sunny.png"
+				}
+				
+				if(n[1] == 7 || n[1] == 6 || n[1] == 8 || n[1] == 11){
+					
+					weathericon.src = "rain.png"
+				}
+				
+
+ 	 		}
+	}
+	
+xmlhttp.open("GET","codeweather.php",true);
+xmlhttp.send();
+
+
+var pixelRatio = window.devicePixelRatio || 1;
+
+var isiPad = navigator.userAgent.match(/iPad/i) != null;
+
+if(isiPad){
+
+codelogo.style.top = getH()- (getH()*0.03) + "px";
+canadalogo.style.top = getH()- (getH()*0.04) + "px";
+
+
+}
+
+
+if(window.screen.width* pixelRatio == 640 && window.screen.height* pixelRatio == 1136){
+	
+	canadalogo.style.top = window.innerHeight - getH()*0.08+'px';
+	codelogo.style.top = window.innerHeight -  getH()*0.07+'px';	
+	weathertext.style.left = getW()/1.6 +'px';
+	weathertext.style.top = getW()*0.43+getW()/5.81+ "px";
+	weathericon.style.left = getW()*0.53 + "px";
+	weathericon.style.top = getW()*0.44 + "px";
+	
+	
+}
+
+</script>
+
+<script>
+$(document).ready(function(){
+	
+		
+	
+	$('#selectyear').change(function () {
+		
+		
+	})
+});
+</script>
+</body>
+</html>
